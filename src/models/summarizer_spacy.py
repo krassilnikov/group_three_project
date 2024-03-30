@@ -10,6 +10,9 @@ class SummarizerSpacy:
     """
 
     def summarize(self, text, per=0.5):
+        start = time.time()
+        print(f'summarizer spacy started')
+
         nlp = spacy.load('ru_core_news_sm')
         doc= nlp(text)
         tokens=[token.text for token in doc]
@@ -41,5 +44,7 @@ class SummarizerSpacy:
         summary=nlargest(select_length, sentence_scores,key=sentence_scores.get)
         final_summary=[word.text for word in summary]
         summary=''.join(final_summary)
-        
+
+        end = time.time()
+        print(f'summarizer spacy finished, elapsed {end - start} sec')
         return summary 
